@@ -1,11 +1,19 @@
 {% extends "learning_logs/base.html" %}
+{% load widget_tweaks %}
+
 {% block content %}
-
-	<p>Add a new topic:</p>
-	<form action="{% url 'learning_logs:new_topic' %}" method='post'>
-	{% csrf_token %}
-		{{ form.as_p }}
-		<button name="submit">add topic</button>
-	</form>
-
+<div class="container mt-4">
+    <h2>Добавить новую тему</h2>
+    <form action="{% url 'learning_logs:new_topic' %}" method="post" class="mt-3">
+        {% csrf_token %}
+        <div class="form-group">
+            {{ form.text.label_tag }}
+            {{ form.text|add_class:"form-control" }}
+            {% for error in form.text.errors %}
+                <div class="alert alert-danger">{{ error }}</div>
+            {% endfor %}
+        </div>
+        <button type="submit" class="btn btn-primary">Добавить тему</button>
+    </form>
+</div>
 {% endblock content %}
