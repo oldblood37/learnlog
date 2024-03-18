@@ -1,10 +1,21 @@
 {% extends "learning_logs/base.html" %}
+{% load widget_tweaks %}
 {% block content %}
-	<p><a href="{% url 'learning_logs:topic' topic.id %}">{{ topic }}</a></p>
-	<p>Edit entry:</p>
-		<form action="{% url 'learning_logs:edit_entry' entry.id %}" method='post'>
-		{% csrf_token %}
-		{{ form.as_p }}
-		<button name="submit">save changes</button>
-	</form>
+<div class="container mt-4">
+    <h2>Редактор записи</h2>
+    <p><a href="{% url 'learning_logs:topic' topic.id %}" class="btn btn-outline-info mb-3">&laquo; Вернуться к теме {{ topic }}</a></p>
+    <form action="{% url 'learning_logs:edit_entry' entry.id %}" method='post'>
+        {% csrf_token %}
+        <div class="form-group">
+            {{ form.text.label_tag }}
+            {{ form.text|add_class:"form-control" }}
+            {% for error in form.text.errors %}
+                <div class="alert alert-danger mt-2">
+                    {{ error }}
+                </div>
+            {% endfor %}
+        </div>
+        <button type="submit" class="btn btn-success">Сохранить</button>
+    </form>
+</div>
 {% endblock content %}
