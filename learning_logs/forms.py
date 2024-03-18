@@ -7,6 +7,7 @@ class TopicForm(forms.ModelForm):
         model = Topic
         fields = ['text']
         labels = {'text': ''}
+        widgets = {'text': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Введите название темы'})}
 
 
 class EntryForm(forms.ModelForm):
