@@ -1,21 +1,25 @@
 {% extends 'learning_logs/base.html' %}
+
 {% block content %}
-  <p>Topic: {{ topic }}</p>
-  <p>Entries:</p>
-  <p>
-    <a href="{% url 'learning_logs:new_entry' topic.id %}">add new entry</a>
-  </p>
-  <ul>
-  {% for entry in entries %}
-    <li>
-      <p>{{ entry.date_added|date:'M d, Y H:i' }}</p>
-      <p>{{ entry.text|linebreaks }}</p>
-      <p>
-        <a href="{% url 'learning_logs:edit_entry' entry.id %}">Edit entry</a>
-      </p>
-    </li>
-  {% empty %}
-    <li>There are no entries for this topic yet ¯\_(ツ)_/¯</li>
-  {% endfor %}
-  </ul>
+<div class="container mt-4">
+  <h2 class="mb-3">Тема: {{ topic }}</h2>
+  <div class="mb-3">
+    <a href="{% url 'learning_logs:new_entry' topic.id %}" class="btn btn-primary">Добавить новую запись</a>
+  </div>
+  {% if entries %}
+    <div class="list-group">
+      {% for entry in entries %}
+        <div class="list-group-item list-group-item-action flex-column align-items-start">
+          <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1">{{ entry.date_added|date:'M d, Y H:i' }}</h5>
+          </div>
+          <p class="mb-1">{{ entry.text|linebreaks }}</p>
+          <small><a href="{% url 'learning_logs:edit_entry' entry.id %}" class="text-decoration-none">Редактировать запись</a></small>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p>В этой теме еще нет записей ¯\_(ツ)_/¯</p>
+  {% endif %}
+</div>
 {% endblock content %}
